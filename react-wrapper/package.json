@@ -45,5 +45,6 @@
       "node_modules",
       "dist"
     ]
-  }
+  },
+  "gitHead": "f6c903407df077f613cfc56604782f3592ca48a1"
 }

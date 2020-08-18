@@ -1,6 +1,7 @@
 {
-  "name": "root",
+  "name": "custom-stencil-slider",
   "private": true,
+  "version": "1.0.6",
   "scripts": {
     "build": "lerna run build",
     "start": "lerna run start",
