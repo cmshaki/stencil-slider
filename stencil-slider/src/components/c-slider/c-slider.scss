@@ -1,0 +1,161 @@
+/*  css carousel
+-----------------------------------*/
+
+/*  universal carousel styles
+-----------------------------------*/
+
+// hide input radio fields
+input[name="carousel"] {
+  display: none;
+}
+
+// carousel navigation
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+
+  & > * {
+    pointer-events: auto;
+  }
+
+  &.dark-theme {
+    label {
+      &:first-child {
+        cursor: url(/assets/svg/arrow_back_ios-white-24dp.svg), pointer;
+      }
+
+      &:last-child {
+        cursor: url(/assets/svg/arrow_forward_ios-white-24dp.svg), pointer;
+      }
+    }
+    &.last-arrow-black {
+      label {
+        &:last-child {
+          cursor: url(/assets/svg/arrow_forward_ios-black-24dp.svg), pointer;
+        }
+      }
+    }
+  }
+
+  label {
+    display: inline-block;
+    height: 100%;
+    top: 0;
+    width: 50%;
+
+    &:first-child {
+      cursor: url(/assets/svg/arrow_back_ios-black-24dp.svg), pointer;
+    }
+
+    &:last-child {
+      cursor: url(/assets/svg/arrow_forward_ios-black-24dp.svg), pointer;
+    }
+  }
+}
+
+@for $i from 2 through 7 {
+  $css-carousel: (
+    slides: $i,
+    transition-speed: 1s
+  );
+
+  .css-carousel-#{$i} {
+    display: flex;
+    position: relative;
+    height: 100%;
+
+    &.no-transitions {
+      .carousel-slides {
+        .carousel-inner {
+          transition: none !important;
+        }
+      }
+    }
+
+    // carousel slides
+    .carousel-slides {
+      overflow: hidden;
+
+      .carousel-inner {
+        display: flex;
+        flex-direction: row;
+        width: (100% * map_get($css-carousel, slides));
+        transition: margin map_get($css-carousel, transition-speed);
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        font-size: 0;
+
+        &.transition-faster {
+          transition: margin map_get($css-carousel, transition-speed) / 2;
+        }
+      }
+
+      .carousel-item {
+        height: 100%;
+        position: relative;
+        width: (100% / map_get($css-carousel, slides));
+
+        .control-ellipsis {
+          position: absolute;
+          bottom: 4px;
+          right: 10px;
+          z-index: 10;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    // active carousel slides
+    @for $n from 0 through map_get($css-carousel, slides) {
+      #carousel-#{$n}:checked ~ .carousel-slides .carousel-inner {
+        margin-left: -100% * $n;
+      }
+    }
+
+    &.load-last-slide-half {
+      #carousel-#{$i - 1}:checked ~ .carousel-slides .carousel-inner {
+        margin-left: (-100% * ($i - 1)) + 50%;
+        transition: margin map_get($css-carousel, transition-speed) / 2;
+      }
+
+      &.two-slide .carousel-inner {
+        transition: margin map_get($css-carousel, transition-speed) / 2;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  @for $i from 2 through 7 {
+    .css-carousel-#{$i} {
+      &.collapse-on-mobile {
+        .carousel-nav {
+          display: none;
+        }
+        .carousel-slides {
+          .carousel-inner {
+            flex-direction: column;
+            width: 100%;
+            margin-left: 0 !important;
+            .carousel-item {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

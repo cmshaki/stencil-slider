@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "stencil-slider",
+    "react-wrapper"
+  ],
+  "version": "independent"
+}

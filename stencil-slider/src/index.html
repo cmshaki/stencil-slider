@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PWA Toolkit</title>
+
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="Welcome to the Ionic PWA Toolkit. You can use this starter to build fast PWAs using Ionic and Stencil!"
+    />
+    <meta name="theme-color" content="#16161d" />
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ionic PWA" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <meta http-equiv="x-ua-compatible" content="IE=Edge" />
+
+    <script type="module" src="/build/stencil-slider.esm.js"></script>
+    <script nomodule src="/build/stencil-slider.js"></script>
+
+    <link
+      href="https://unpkg.com/video.js@7/dist/video-js.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/icon/apple-touch-icon.png"
+    />
+    <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+
+  <body style="margin: 0">
+    <c-slider
+      slides="6"
+      load-last-slide-item-halfway="1"
+      style="position: relative; height: 100vh; overflow: hidden"
+      theme="1"
+      last-arrow-black="1"
+    >
+      <div class="carousel-item">
+        <c-video
+          account="dijazdrvc"
+          index="0"
+          alias="spink/Road-Tripping_byesc5"
+          width="1366"
+          height="654"
+          crop="fill"
+        ></c-video>
+      </div>
+      <div class="carousel-item">
+        <c-image
+          account="dijazdrvc"
+          alias="spink/papers.co-be05-space-stuart-fantacy-art-illustration-blue-red-1366x768_gxydwm"
+          crop="scale"
+          width="1366"
+          height="654"
+          sizes="100vw"
+          gravity="center"
+        ></c-image>
+      </div>
+      <div class="carousel-item">
+        <c-video
+          account="dijazdrvc"
+          index="2"
+          alias="spink/Sunset-Desert-Run_b6c3q8"
+          crop="fill"
+          width="1366"
+          height="654"
+        ></c-video>
+      </div>
+      <div class="carousel-item">
+        <c-image
+          account="dijazdrvc"
+          alias="spink/papers.co-be02-stuart-space-digital-fantasy-art-illustration-1366x768_vcgmz9"
+          crop="scale"
+          sizes="100vw"
+          width="1366"
+          height="654"
+          gravity="center"
+        ></c-image>
+      </div>
+      <div class="carousel-item">
+        <c-video
+          account="dijazdrvc"
+          index="4"
+          alias="spink/coverr--girl-with-dog-near-lake-and-mountains-in-new-zealand-1585909449252_l93x8y"
+          width="1366"
+          height="654"
+        ></c-video>
+      </div>
+      <div class="carousel-item">
+        <c-image
+          account="dijazdrvc"
+          alias="spink/papers.co-vy42-honey-hexagon-digital-abstract-pattern-background-red-1366x768_mllwjs"
+          crop="scale"
+          width="1366"
+          height="654"
+          sizes="100vw"
+          gravity="center"
+        ></c-image>
+      </div>
+    </c-slider>
+  </body>
+</html>
