@@ -120,13 +120,22 @@ input[name="carousel"] {
 
     // active carousel slides
     @for $n from 0 through map_get($css-carousel, slides) {
-      #carousel-#{$n}:checked ~ .carousel-slides .carousel-inner {
+      $a: $n + 1;
+      input[name="carousel"]:nth-child#{"("
+        + $a
+        + ")"}:checked
+        ~ .carousel-slides
+        .carousel-inner {
         margin-left: -100% * $n;
       }
     }
 
     &.load-last-slide-half {
-      #carousel-#{$i - 1}:checked ~ .carousel-slides .carousel-inner {
+      input[name="carousel"]:nth-child#{"("
+        + $i
+        + ")"}:checked
+        ~ .carousel-slides
+        .carousel-inner {
         margin-left: (-100% * ($i - 1)) + 50%;
         transition: margin map_get($css-carousel, transition-speed) / 2;
       }

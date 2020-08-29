@@ -16,7 +16,6 @@ export namespace Components {
         "width": string;
     }
     interface CSlider {
-        "activeSlideIndex"?: number;
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
@@ -25,6 +24,7 @@ export namespace Components {
         "nextLabelFunc"?: Function;
         "noTransitions": boolean;
         "prevLabelFunc"?: Function;
+        "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
         "slides": number;
         "theme"?: boolean;
@@ -77,7 +77,6 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface CSlider {
-        "activeSlideIndex"?: number;
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
@@ -86,6 +85,7 @@ declare namespace LocalJSX {
         "nextLabelFunc"?: Function;
         "noTransitions"?: boolean;
         "prevLabelFunc"?: Function;
+        "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
         "slides"?: number;
         "theme"?: boolean;

@@ -10,7 +10,6 @@ export class Slider {
   @Prop() loadLastSlideItemHalfway?: boolean;
   @Prop() carouselInnerTransitionFaster?: string;
   @Prop() collapseOnMobile?: boolean;
-  @Prop() activeSlideIndex?: number;
   @Prop() removeArrowNavigation?: boolean;
   @Prop() theme?: boolean;
   @Prop() lastArrowBlack?: boolean;
@@ -18,6 +17,8 @@ export class Slider {
   @Prop() didLoadFunc?: Function;
   @Prop() prevLabelFunc?: Function;
   @Prop() nextLabelFunc?: Function;
+  @Prop() radioButtonIdOffset?: number;
+  @State() activeSlideIndex?: number;
   @State() activeArr: Array<boolean>;
 
   activeMap: Map<number, Array<boolean>>;
@@ -47,7 +48,7 @@ export class Slider {
   }
 
   componentWillRender() {
-    if (this.activeSlideIndex) {
+    if (this.activeSlideIndex !== undefined) {
       if (this.activeSlideIndex !== this.previousSlideIndex) {
         if (this.activeSlideIndex > 10) {
           const newIndex = this.activeSlideIndex / 10;
@@ -122,7 +123,9 @@ export class Slider {
           type="radio"
           onClick={() => this.handleClick(i)}
           name="carousel"
-          id={`carousel-${i}`}
+          id={`carousel-${
+            this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
+          }`}
           checked={this.activeArr[i]}
         />
       );
@@ -157,17 +160,40 @@ export class Slider {
       >
         <label
           htmlFor={
-            this.activeArr.indexOf(true) > 0
-              ? `carousel-${this.activeArr.indexOf(true) - 1}`
-              : `carousel-${this.activeArr.length - 1}`
+            this.activeArr.indexOf(true) +
+              (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) >
+            (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0)
+              ? `carousel-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset +
+                      this.activeArr.indexOf(true) -
+                      1
+                    : this.activeArr.indexOf(true) - 1
+                }`
+              : `carousel-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset + this.activeArr.length - 1
+                    : this.activeArr.length - 1
+                }`
           }
           {...prevLabelProps}
         ></label>
         <label
           htmlFor={
-            this.activeArr.indexOf(true) < this.activeArr.length - 1
-              ? `carousel-${this.activeArr.indexOf(true) + 1}`
-              : "carousel-0"
+            this.activeArr.indexOf(true) +
+              (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) <
+            (this.radioButtonIdOffset
+              ? this.radioButtonIdOffset + this.activeArr.length - 1
+              : this.activeArr.length - 1)
+              ? `carousel-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset +
+                      (this.activeArr.indexOf(true) + 1)
+                    : this.activeArr.indexOf(true) + 1
+                }`
+              : `carousel-${
+                  this.radioButtonIdOffset ? this.radioButtonIdOffset : 0
+                }`
           }
           {...nextLabelProps}
         ></label>

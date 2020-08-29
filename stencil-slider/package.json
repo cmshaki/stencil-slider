@@ -16,7 +16,7 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build",
+    "build": "rimraf ./loader && rimraf ./www && rimraf ./dist && stencil build",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watch",
@@ -30,6 +30,7 @@
     "@types/puppeteer": "^2.0.1",
     "jest-cli": "^26.1.0",
     "puppeteer": "^2.1.1",
+    "rimraf": "^3.0.2",
     "video.js": "^7.8.3"
   },
   "dependencies": {
