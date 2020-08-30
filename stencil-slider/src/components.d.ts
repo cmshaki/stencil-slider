@@ -16,6 +16,7 @@ export namespace Components {
         "width": string;
     }
     interface CSlider {
+        "activeSlideIndex"?: number;
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
@@ -77,6 +78,7 @@ declare namespace LocalJSX {
         "width"?: string;
     }
     interface CSlider {
+        "activeSlideIndex"?: number;
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;

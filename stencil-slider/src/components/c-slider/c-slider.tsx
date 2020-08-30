@@ -1,4 +1,4 @@
-import { Component, Prop, State, h } from "@stencil/core";
+import { Component, Prop, State, Watch, h } from "@stencil/core";
 import Tunnel from "../data/active";
 
 @Component({
@@ -18,12 +18,30 @@ export class Slider {
   @Prop() prevLabelFunc?: Function;
   @Prop() nextLabelFunc?: Function;
   @Prop() radioButtonIdOffset?: number;
-  @State() activeSlideIndex?: number;
+  @Prop() activeSlideIndex?: number;
   @State() activeArr: Array<boolean>;
 
   activeMap: Map<number, Array<boolean>>;
   initialArr: Array<boolean>;
   previousSlideIndex: number;
+
+  @Watch("activeSlideIndex")
+  watchHandler(newValue, oldValue) {
+    if (newValue !== undefined) {
+      if (newValue !== oldValue) {
+        if (newValue > 10) {
+          const newIndex = newValue / 10;
+          if (!this.activeArr[newIndex]) {
+            this.activeArr = this.activeMap.get(newIndex);
+          }
+        } else {
+          if (!this.activeArr[this.activeSlideIndex]) {
+            this.activeArr = this.activeMap.get(newValue);
+          }
+        }
+      }
+    }
+  }
 
   componentWillLoad() {
     // Change the new Array constructor number to reflect the number of slides you want
@@ -43,25 +61,6 @@ export class Slider {
         this.activeMap.set(i, getCurrentActiveArr(i));
       } else {
         this.activeMap.set(i, this.initialArr);
-      }
-    }
-  }
-
-  componentWillRender() {
-    if (this.activeSlideIndex !== undefined) {
-      if (this.activeSlideIndex !== this.previousSlideIndex) {
-        if (this.activeSlideIndex > 10) {
-          const newIndex = this.activeSlideIndex / 10;
-          if (!this.activeArr[newIndex]) {
-            this.previousSlideIndex = this.activeSlideIndex;
-            this.activeArr = this.activeMap.get(newIndex);
-          }
-        } else {
-          if (!this.activeArr[this.activeSlideIndex]) {
-            this.previousSlideIndex = this.activeSlideIndex;
-            this.activeArr = this.activeMap.get(this.activeSlideIndex);
-          }
-        }
       }
     }
   }
@@ -118,15 +117,19 @@ export class Slider {
   renderInputRadioButtons = () => {
     let arr = [];
     for (let i = 0; i < this.initialArr.length; i++) {
+      const inputProps = { checked: this.activeArr[i] };
+      if (!inputProps.checked) delete inputProps.checked;
       arr[i] = (
         <input
           type="radio"
           onClick={() => this.handleClick(i)}
-          name="carousel"
+          name={`carousel${
+            this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
+          }`}
           id={`carousel-${
             this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
           }`}
-          checked={this.activeArr[i]}
+          {...inputProps}
         />
       );
     }

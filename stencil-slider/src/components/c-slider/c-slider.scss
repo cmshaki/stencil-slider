@@ -5,9 +5,6 @@
 -----------------------------------*/
 
 // hide input radio fields
-input[name="carousel"] {
-  display: none;
-}
 
 // carousel navigation
 .carousel-nav {
@@ -73,6 +70,10 @@ input[name="carousel"] {
     position: relative;
     height: 100%;
 
+    & > input {
+      display: none;
+    }
+
     &.no-transitions {
       .carousel-slides {
         .carousel-inner {
@@ -121,7 +122,8 @@ input[name="carousel"] {
     // active carousel slides
     @for $n from 0 through map_get($css-carousel, slides) {
       $a: $n + 1;
-      input[name="carousel"]:nth-child#{"("
+      &
+        > input:nth-child#{"("
         + $a
         + ")"}:checked
         ~ .carousel-slides
@@ -131,7 +133,8 @@ input[name="carousel"] {
     }
 
     &.load-last-slide-half {
-      input[name="carousel"]:nth-child#{"("
+      &
+        > input:nth-child#{"("
         + $i
         + ")"}:checked
         ~ .carousel-slides
