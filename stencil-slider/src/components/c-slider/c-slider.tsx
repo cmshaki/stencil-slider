@@ -29,7 +29,7 @@ export class Slider {
   watchHandler(newValue, oldValue) {
     if (newValue !== undefined) {
       if (newValue !== oldValue) {
-        if (newValue > 10) {
+        if (newValue > 9) {
           const newIndex = newValue / 10;
           if (!this.activeArr[newIndex]) {
             this.activeArr = this.activeMap.get(newIndex);
@@ -56,7 +56,13 @@ export class Slider {
     for (let i = 0; i < this.initialArr.length; i++) {
       this.activeMap.set(i, getCurrentActiveArr(i));
     }
-    this.initialArr[this.activeSlideIndex ? this.activeSlideIndex : 0] = true;
+    this.initialArr[
+      this.activeSlideIndex
+        ? this.activeSlideIndex > 9
+          ? this.activeSlideIndex / 10
+          : this.activeSlideIndex
+        : 0
+    ] = true;
     this.activeArr = this.initialArr;
   }
 
