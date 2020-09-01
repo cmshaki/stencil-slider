@@ -46,23 +46,18 @@ export class Slider {
   componentWillLoad() {
     // Change the new Array constructor number to reflect the number of slides you want
     this.initialArr = new Array(this.slides).fill(false);
-    this.initialArr[this.activeSlideIndex ? this.activeSlideIndex : 0] = true;
-    this.activeArr = this.initialArr;
     const getCurrentActiveArr = (index: number) => {
       return this.initialArr.map((val, idx) => {
-        if (val == true) return false;
         if (index == idx) return true;
         return val;
       });
     };
     this.activeMap = new Map();
     for (let i = 0; i < this.initialArr.length; i++) {
-      if (i) {
-        this.activeMap.set(i, getCurrentActiveArr(i));
-      } else {
-        this.activeMap.set(i, this.initialArr);
-      }
+      this.activeMap.set(i, getCurrentActiveArr(i));
     }
+    this.initialArr[this.activeSlideIndex ? this.activeSlideIndex : 0] = true;
+    this.activeArr = this.initialArr;
   }
 
   componentDidLoad() {
