@@ -20,6 +20,7 @@ export namespace Components {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;
         "loadLastSlideItemHalfway"?: boolean;
         "nextLabelFunc"?: Function;
@@ -28,6 +29,7 @@ export namespace Components {
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
         "slides": number;
+        "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
     }
     interface CVideo {
@@ -37,8 +39,11 @@ export namespace Components {
         "crop": string;
         "height": string;
         "index": number;
+        "intervalTimeout"?: number;
         "isActive": Array<boolean | null>;
         "mobileCollapse": boolean;
+        "startInterval": Function;
+        "stopInterval": Function;
         "width": string;
     }
 }
@@ -82,6 +87,7 @@ declare namespace LocalJSX {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;
         "loadLastSlideItemHalfway"?: boolean;
         "nextLabelFunc"?: Function;
@@ -90,6 +96,7 @@ declare namespace LocalJSX {
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
         "slides"?: number;
+        "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
     }
     interface CVideo {
@@ -99,8 +106,11 @@ declare namespace LocalJSX {
         "crop"?: string;
         "height"?: string;
         "index"?: number;
+        "intervalTimeout"?: number;
         "isActive"?: Array<boolean | null>;
         "mobileCollapse"?: boolean;
+        "startInterval"?: Function;
+        "stopInterval"?: Function;
         "width"?: string;
     }
     interface IntrinsicElements {

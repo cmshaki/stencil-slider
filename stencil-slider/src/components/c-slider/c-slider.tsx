@@ -19,11 +19,16 @@ export class Slider {
   @Prop() nextLabelFunc?: Function;
   @Prop() radioButtonIdOffset?: number;
   @Prop() activeSlideIndex?: number;
+  @Prop() intervalTimeoutDuration?: number;
+  @Prop() stopFirstAndLastSlideTransitions?: boolean;
   @State() activeArr: Array<boolean>;
+  @State() stopTransitions: boolean;
 
+  intervalTimeout: any;
   activeMap: Map<number, Array<boolean>>;
   initialArr: Array<boolean>;
   previousSlideIndex: number;
+  intervalFunc: Function;
 
   @Watch("activeSlideIndex")
   watchHandler(newValue, oldValue) {
@@ -64,14 +69,61 @@ export class Slider {
         : 0
     ] = true;
     this.activeArr = this.initialArr;
+    this.intervalFunc = () => {
+      const index = this.activeArr.indexOf(true);
+      if (index === this.activeArr.length - 1) {
+        if (this.stopFirstAndLastSlideTransitions) {
+          if (!this.stopTransitions) {
+            this.stopTransitions = true;
+          }
+        }
+        this.activeArr = this.activeMap.get(0);
+      } else {
+        if (this.stopFirstAndLastSlideTransitions) {
+          if (this.stopTransitions) {
+            this.stopTransitions = false;
+          }
+        }
+        this.activeArr = this.activeMap.get(index + 1);
+      }
+    };
+    if (this.intervalTimeoutDuration) {
+      this.intervalTimeout = setInterval(
+        this.intervalFunc,
+        this.intervalTimeoutDuration
+      );
+    }
   }
 
   componentDidLoad() {
     this.didLoadFunc ? this.didLoadFunc() : null;
   }
 
+  disconnectedCallback() {
+    if (this.intervalTimeout) clearTimeout(this.intervalTimeout);
+  }
+
+  startInterval = () => {
+    this.intervalTimeout = setInterval(
+      this.intervalFunc,
+      this.intervalTimeoutDuration
+    );
+  };
+  stopInterval = () => {
+    if (this.intervalTimeout) clearTimeout(this.intervalTimeout);
+  };
+
   handleClick(index: number) {
     const idx = this.activeArr.indexOf(true);
+    if (this.stopFirstAndLastSlideTransitions) {
+      if (idx === this.activeArr.length - 1 && index === 0) {
+        this.stopTransitions = true;
+      } else if (idx === 0 && index === this.activeArr.length - 1) {
+        this.stopTransitions = true;
+      } else {
+        if (this.stopTransitions) this.stopTransitions = false;
+      }
+    }
     if (!this.activeArr[index]) {
       this.activeArr = this.activeMap.get(index);
     }
@@ -220,7 +272,9 @@ export class Slider {
       <div
         class={`css-carousel-${this.slides}${this.lastSlideWidthChecker()}${
           this.collapseOnMobile ? " collapse-on-mobile" : ""
-        }${this.noTransitions ? " no-transitions" : ""}`}
+        }${
+          this.noTransitions || this.stopTransitions ? " no-transitions" : ""
+        }`}
       >
         {/* carousel controls */}
         {this.renderInputRadioButtons()}
@@ -238,7 +292,10 @@ export class Slider {
             <Tunnel.Provider
               state={{
                 isActive: this.activeArr,
-                mobileCollapse: this.collapseOnMobile ? true : false
+                mobileCollapse: this.collapseOnMobile ? true : false,
+                intervalTimeout: this.intervalTimeoutDuration,
+                startInterval: this.startInterval,
+                stopInterval: this.stopInterval
               }}
             >
               <slot />

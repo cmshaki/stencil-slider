@@ -16,6 +16,9 @@ export class CloudinaryVideo {
   @Prop() alias: string;
   @Prop() isActive: Array<boolean | null>;
   @Prop() mobileCollapse: boolean;
+  @Prop() intervalTimeout?: number;
+  @Prop() startInterval: Function;
+  @Prop() stopInterval: Function;
   @Prop() index: number;
 
   @State() fullVideo: string;
@@ -95,12 +98,18 @@ export class CloudinaryVideo {
     }
   };
 
-  fireMouseEnter = () => (this.mouseEnterEvent = true);
+  fireMouseEnter = () => {
+    if (this.intervalTimeout) {
+      this.stopInterval();
+    }
+    this.mouseEnterEvent = true;
+  };
   fireMouseLeave = () => {
     this.mouseEnterEvent = false;
     if (this.currentWindowWidth > 640) {
       return setTimeout(() => {
         if (!this.mouseEnterEvent) this.ellipsisRadio.checked = false;
+        this.startInterval();
       }, 10000);
     }
   };
@@ -173,4 +182,10 @@ export class CloudinaryVideo {
   }
 }
 
-Tunnel.injectProps(CloudinaryVideo, ["isActive", "mobileCollapse"]);
+Tunnel.injectProps(CloudinaryVideo, [
+  "isActive",
+  "mobileCollapse",
+  "intervalTimeout",
+  "startInterval",
+  "stopInterval"
+]);
