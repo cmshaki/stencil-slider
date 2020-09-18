@@ -109,12 +109,22 @@ export class Slider {
       this.intervalTimeoutDuration
     );
   };
+
   stopInterval = () => {
     if (this.intervalTimeout) clearTimeout(this.intervalTimeout);
   };
 
   handleClick(index: number) {
     const idx = this.activeArr.indexOf(true);
+    if (this.intervalTimeoutDuration) {
+      if (this.intervalTimeout) {
+        clearTimeout(this.intervalTimeout);
+      }
+      this.intervalTimeout = setInterval(
+        this.intervalFunc,
+        this.intervalTimeoutDuration
+      );
+    }
     if (this.stopFirstAndLastSlideTransitions) {
       if (idx === this.activeArr.length - 1 && index === 0) {
         this.stopTransitions = true;

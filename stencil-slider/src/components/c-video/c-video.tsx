@@ -32,6 +32,8 @@ export class CloudinaryVideo {
   private ellipsisRadio: HTMLInputElement;
   private vjsControlBar: HTMLDivElement;
   private videoWrapper: HTMLDivElement;
+  private elllipsisTimeout;
+  any;
 
   componentWillLoad() {
     this.mouseEnterEvent = false;
@@ -67,6 +69,7 @@ export class CloudinaryVideo {
   }
 
   disconnectedCallback() {
+    if (this.elllipsisTimeout) clearTimeout(this.elllipsisTimeout);
     if (this.videoJsEl) this.videoJsEl.dispose();
     if (this.vjsControlBar) {
       this.vjsControlBar.removeEventListener("mouseenter", this.fireMouseEnter);
@@ -104,10 +107,11 @@ export class CloudinaryVideo {
     }
     this.mouseEnterEvent = true;
   };
+
   fireMouseLeave = () => {
     this.mouseEnterEvent = false;
     if (this.currentWindowWidth > 640) {
-      return setTimeout(() => {
+      this.elllipsisTimeout = setTimeout(() => {
         if (!this.mouseEnterEvent) this.ellipsisRadio.checked = false;
         this.startInterval();
       }, 10000);
