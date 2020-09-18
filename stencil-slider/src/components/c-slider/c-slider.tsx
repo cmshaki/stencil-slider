@@ -21,6 +21,7 @@ export class Slider {
   @Prop() activeSlideIndex?: number;
   @Prop() intervalTimeoutDuration?: number;
   @Prop() stopFirstAndLastSlideTransitions?: boolean;
+  @Prop() intervalExternalFunction?: Function;
   @State() activeArr: Array<boolean>;
   @State() stopTransitions: boolean;
 
@@ -70,6 +71,9 @@ export class Slider {
     ] = true;
     this.activeArr = this.initialArr;
     this.intervalFunc = () => {
+      if (this.intervalExternalFunction) {
+        this.intervalExternalFunction(this.activeArr.indexOf(true));
+      }
       const index = this.activeArr.indexOf(true);
       if (index === this.activeArr.length - 1) {
         if (this.stopFirstAndLastSlideTransitions) {

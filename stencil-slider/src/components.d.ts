@@ -20,6 +20,7 @@ export namespace Components {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "intervalExternalFunction"?: Function;
         "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;
         "loadLastSlideItemHalfway"?: boolean;
@@ -87,6 +88,7 @@ declare namespace LocalJSX {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "intervalExternalFunction"?: Function;
         "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;
         "loadLastSlideItemHalfway"?: boolean;
