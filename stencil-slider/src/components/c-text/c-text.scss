@@ -1,0 +1,131 @@
+input[name^="paragraph"] {
+  display: none;
+  @for $i from 1 through 6 {
+    &:nth-child#{"(" + $i + ")"} {
+      &:checked {
+        & ~ .paragraphs-wrapper {
+          .paragraph-item {
+            @if $i > 1 {
+              $t: $i;
+              @while $t > 0 {
+                &:nth-child#{"("+($t - 1) + ")"} {
+                  transform: translateY(-100vh);
+                }
+                $t: $t - 1;
+              }
+            }
+            @if $i < 6 {
+              $t: 6;
+              @while $t > $i {
+                &:nth-child#{"(" + $t + ")"} {
+                  transform: translateY(100vh);
+                }
+                $t: $t - 1;
+              }
+            }
+            &:nth-child#{"(" + $i + ")"} {
+              transform: translateY(0);
+            }
+            @media screen and (max-width: 640px) {
+              @if $i > 1 {
+                $t: $i;
+                @while $t > 0 {
+                  &:nth-child#{"("+($t - 1) + ")"} {
+                    transform: translateY(-50vh);
+                  }
+                  $t: $t - 1;
+                }
+              }
+              @if $i < 6 {
+                $t: 6;
+                @while $t > $i {
+                  &:nth-child#{"(" + $t + ")"} {
+                    transform: translateY(50vh);
+                  }
+                  $t: $t - 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.paragraphs-root {
+  height: 100vh;
+
+  .paragraphs-wrapper {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    .paragraph-item {
+      height: 100%;
+      z-index: 2;
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+      transition: transform 1s cubic-bezier(0.17, 0, 0, 1);
+
+      .paragraph-inner-item {
+        height: 100%;
+        position: relative;
+        padding: 19vh 9vw 4.5vw 4.5vw;
+        font-size: 1rem;
+
+        p {
+          margin: 0;
+          font-weight: 500;
+          pointer-events: none;
+        }
+
+        @media screen and (max-width: 640px) {
+          padding: 10vh 9vw 4.5vw 4.5vw;
+        }
+      }
+
+      .paragraph-nav {
+        & > * {
+          position: absolute;
+          pointer-events: auto;
+          cursor: pointer;
+          padding: 0.25rem;
+        }
+
+        .arrow-up {
+          top: 19vh;
+          right: 25px;
+
+          &.anchor-down {
+            top: auto;
+            bottom: 60px;
+          }
+
+          @media screen and (max-width: 640px) {
+            top: 9vh;
+            right: 4.5vw;
+
+            &.anchor-down {
+              bottom: 4.5vw;
+            }
+          }
+        }
+
+        .arrow-down {
+          bottom: 60px;
+          right: 25px;
+          @media screen and (max-width: 640px) {
+            right: 4.5vw;
+            bottom: 4.5vw;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    height: 50vh;
+  }
+}

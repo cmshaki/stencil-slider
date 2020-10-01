@@ -33,6 +33,12 @@ export namespace Components {
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
     }
+    interface CText {
+        "maxDesktopText": number;
+        "maxMobileText": number;
+        "radioButtonIdOffset"?: number;
+        "richText": string[];
+    }
     interface CVideo {
         "account": string;
         "alias": string;
@@ -61,6 +67,12 @@ declare global {
         prototype: HTMLCSliderElement;
         new (): HTMLCSliderElement;
     };
+    interface HTMLCTextElement extends Components.CText, HTMLStencilElement {
+    }
+    var HTMLCTextElement: {
+        prototype: HTMLCTextElement;
+        new (): HTMLCTextElement;
+    };
     interface HTMLCVideoElement extends Components.CVideo, HTMLStencilElement {
     }
     var HTMLCVideoElement: {
@@ -70,6 +82,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "c-image": HTMLCImageElement;
         "c-slider": HTMLCSliderElement;
+        "c-text": HTMLCTextElement;
         "c-video": HTMLCVideoElement;
     }
 }
@@ -101,6 +114,12 @@ declare namespace LocalJSX {
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
     }
+    interface CText {
+        "maxDesktopText"?: number;
+        "maxMobileText"?: number;
+        "radioButtonIdOffset"?: number;
+        "richText"?: string[];
+    }
     interface CVideo {
         "account"?: string;
         "alias"?: string;
@@ -118,6 +137,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "c-image": CImage;
         "c-slider": CSlider;
+        "c-text": CText;
         "c-video": CVideo;
     }
 }
@@ -127,6 +147,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "c-image": LocalJSX.CImage & JSXBase.HTMLAttributes<HTMLCImageElement>;
             "c-slider": LocalJSX.CSlider & JSXBase.HTMLAttributes<HTMLCSliderElement>;
+            "c-text": LocalJSX.CText & JSXBase.HTMLAttributes<HTMLCTextElement>;
             "c-video": LocalJSX.CVideo & JSXBase.HTMLAttributes<HTMLCVideoElement>;
         }
     }
