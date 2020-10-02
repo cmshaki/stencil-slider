@@ -18,7 +18,7 @@ export class CText {
   currentWidth: number;
 
   divideText(maxChars) {
-    if (this.richText.length == 1) return this.richText[0]; // If we are on the last item return last item
+    if (this.richText.length == 1) return this.richText; // If we are on the last item return last item
     const charCounts = this.richText.map(val => {
       return val.length;
     }); // Counts the number of characters on each rich text item
@@ -195,7 +195,6 @@ export class CText {
   };
 
   renderParagraphs = () => {
-    if (!this.textRender) return null;
     return this.textRender.map((val, idx) => (
       <div class="paragraph-item">
         <div class="paragraph-inner-item">
@@ -209,8 +208,12 @@ export class CText {
   render() {
     return (
       <div class="paragraphs-root">
-        {this.renderInputRadioButtons()}
-        <div class="paragraphs-wrapper">{this.renderParagraphs()}</div>
+        {this.textRender && this.activeArr
+          ? this.renderInputRadioButtons()
+          : null}
+        <div class="paragraphs-wrapper">
+          {this.textRender ? this.renderParagraphs() : null}
+        </div>
       </div>
     );
   }
