@@ -105,7 +105,7 @@ input[name^="paragraph"] {
 
           @media screen and (max-width: 640px) {
             top: 9vh;
-            right: 4.5vw;
+            right: -1vw;
 
             &.anchor-down {
               bottom: 4.5vw;
@@ -117,7 +117,7 @@ input[name^="paragraph"] {
           bottom: 60px;
           right: 25px;
           @media screen and (max-width: 640px) {
-            right: 4.5vw;
+            right: -1vw;
             bottom: 4.5vw;
           }
         }
