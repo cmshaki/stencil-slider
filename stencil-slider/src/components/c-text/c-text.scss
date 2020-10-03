@@ -1,6 +1,6 @@
 input[name^="paragraph"] {
   display: none;
-  @for $i from 1 through 7 {
+  @for $i from 1 through 10 {
     &:nth-child#{"(" + $i + ")"} {
       &:checked {
         & ~ .paragraphs-wrapper {
@@ -14,8 +14,8 @@ input[name^="paragraph"] {
                 $t: $t - 1;
               }
             }
-            @if $i < 7 {
-              $t: 7;
+            @if $i < 10 {
+              $t: 10;
               @while $t > $i {
                 &:nth-child#{"(" + $t + ")"} {
                   transform: translateY(100%);
