@@ -1,6 +1,6 @@
 input[name^="paragraph"] {
   display: none;
-  @for $i from 1 through 6 {
+  @for $i from 1 through 7 {
     &:nth-child#{"(" + $i + ")"} {
       &:checked {
         & ~ .paragraphs-wrapper {
@@ -14,8 +14,8 @@ input[name^="paragraph"] {
                 $t: $t - 1;
               }
             }
-            @if $i < 6 {
-              $t: 6;
+            @if $i < 7 {
+              $t: 7;
               @while $t > $i {
                 &:nth-child#{"(" + $t + ")"} {
                   transform: translateY(100%);
@@ -55,7 +55,6 @@ input[name^="paragraph"] {
         height: 100%;
         position: relative;
         padding: 19vh 9vw 4.5vw 4.5vw;
-        font-size: 1rem;
 
         p {
           margin: 0;
@@ -90,7 +89,7 @@ input[name^="paragraph"] {
             right: 3vw;
 
             &.anchor-down {
-              bottom: 4.5vw;
+              bottom: 60px;
             }
           }
         }
@@ -101,7 +100,7 @@ input[name^="paragraph"] {
 
           @media screen and (max-width: 640px) {
             right: 3vw;
-            bottom: 4.5vw;
+            bottom: 60px;
           }
         }
       }
