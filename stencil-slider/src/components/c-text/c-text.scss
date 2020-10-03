@@ -9,7 +9,7 @@ input[name^="paragraph"] {
               $t: $i;
               @while $t > 0 {
                 &:nth-child#{"("+($t - 1) + ")"} {
-                  transform: translateY(-100vh);
+                  transform: translateY(-100%);
                 }
                 $t: $t - 1;
               }
@@ -18,33 +18,13 @@ input[name^="paragraph"] {
               $t: 6;
               @while $t > $i {
                 &:nth-child#{"(" + $t + ")"} {
-                  transform: translateY(100vh);
+                  transform: translateY(100%);
                 }
                 $t: $t - 1;
               }
             }
             &:nth-child#{"(" + $i + ")"} {
               transform: translateY(0);
-            }
-            @media screen and (max-width: 640px) {
-              @if $i > 1 {
-                $t: $i;
-                @while $t > 0 {
-                  &:nth-child#{"("+($t - 1) + ")"} {
-                    transform: translateY(-50vh);
-                  }
-                  $t: $t - 1;
-                }
-              }
-              @if $i < 6 {
-                $t: 6;
-                @while $t > $i {
-                  &:nth-child#{"(" + $t + ")"} {
-                    transform: translateY(50vh);
-                  }
-                  $t: $t - 1;
-                }
-              }
             }
           }
         }
@@ -54,7 +34,7 @@ input[name^="paragraph"] {
 }
 
 .paragraphs-root {
-  height: 100vh;
+  height: 100%;
 
   .paragraphs-wrapper {
     height: 100%;
@@ -62,10 +42,12 @@ input[name^="paragraph"] {
     overflow: hidden;
 
     .paragraph-item {
-      height: 100%;
       z-index: 2;
       position: absolute;
       top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
       pointer-events: none;
       transition: transform 1s cubic-bezier(0.17, 0, 0, 1);
 
@@ -124,9 +106,5 @@ input[name^="paragraph"] {
         }
       }
     }
-  }
-
-  @media screen and (max-width: 640px) {
-    height: 50vh;
   }
 }
