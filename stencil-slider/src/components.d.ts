@@ -29,6 +29,7 @@ export namespace Components {
         "prevLabelFunc"?: Function;
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
+        "sliderLang": string;
         "slides": number;
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
@@ -38,6 +39,7 @@ export namespace Components {
         "maxMobileText": number;
         "radioButtonIdOffset"?: number;
         "richText": string[];
+        "sliderLang": string;
     }
     interface CVideo {
         "account": string;
@@ -110,6 +112,7 @@ declare namespace LocalJSX {
         "prevLabelFunc"?: Function;
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
+        "sliderLang"?: string;
         "slides"?: number;
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
@@ -119,6 +122,7 @@ declare namespace LocalJSX {
         "maxMobileText"?: number;
         "radioButtonIdOffset"?: number;
         "richText"?: string[];
+        "sliderLang"?: string;
     }
     interface CVideo {
         "account"?: string;

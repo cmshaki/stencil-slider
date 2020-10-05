@@ -22,6 +22,7 @@ export class Slider {
   @Prop() intervalTimeoutDuration?: number;
   @Prop() stopFirstAndLastSlideTransitions?: boolean;
   @Prop() intervalExternalFunction?: Function;
+  @Prop() sliderLang: string;
   @State() activeArr: Array<boolean>;
   @State() stopTransitions: boolean;
 
@@ -190,10 +191,10 @@ export class Slider {
         <input
           type="radio"
           onClick={() => this.handleClick(i)}
-          name={`carousel${
+          name={`carousel${this.sliderLang}${
             this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
           }`}
-          id={`carousel-${
+          id={`carousel-${this.sliderLang}-${
             this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
           }`}
           {...inputProps}
@@ -233,14 +234,14 @@ export class Slider {
             this.activeArr.indexOf(true) +
               (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) >
             (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0)
-              ? `carousel-${
+              ? `carousel-${this.sliderLang}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset +
                       this.activeArr.indexOf(true) -
                       1
                     : this.activeArr.indexOf(true) - 1
                 }`
-              : `carousel-${
+              : `carousel-${this.sliderLang}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset + this.activeArr.length - 1
                     : this.activeArr.length - 1
@@ -255,13 +256,13 @@ export class Slider {
             (this.radioButtonIdOffset
               ? this.radioButtonIdOffset + this.activeArr.length - 1
               : this.activeArr.length - 1)
-              ? `carousel-${
+              ? `carousel-${this.sliderLang}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset +
                       (this.activeArr.indexOf(true) + 1)
                     : this.activeArr.indexOf(true) + 1
                 }`
-              : `carousel-${
+              : `carousel-${this.sliderLang}-${
                   this.radioButtonIdOffset ? this.radioButtonIdOffset : 0
                 }`
           }

@@ -8,6 +8,7 @@ export class CText {
   @Prop() richText: string[]; // Array of strings
   @Prop() maxDesktopText: number;
   @Prop() maxMobileText: number;
+  @Prop() sliderLang: string;
   @Prop() radioButtonIdOffset?: number;
 
   @State() activeArr: Array<boolean>;
@@ -130,10 +131,10 @@ export class CText {
         <input
           type="radio"
           onClick={() => this.handleClick(i)}
-          name={`paragraph${
+          name={`paragraph-${this.sliderLang}${
             this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
           }`}
-          id={`paragraph-${
+          id={`paragraph-${this.sliderLang}-${
             this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
           }`}
           {...inputProps}
@@ -151,7 +152,7 @@ export class CText {
             class={`arrow-up${
               index === this.textRender.length - 1 ? " anchor-down" : ""
             }`}
-            htmlFor={`paragraph-${
+            htmlFor={`paragraph-${this.sliderLang}-${
               this.radioButtonIdOffset
                 ? this.radioButtonIdOffset + index - 1
                 : index - 1
@@ -172,7 +173,7 @@ export class CText {
         {index < this.textRender.length - 1 ? (
           <label
             class="arrow-down"
-            htmlFor={`paragraph-${
+            htmlFor={`paragraph-${this.sliderLang}-${
               this.radioButtonIdOffset
                 ? this.radioButtonIdOffset + index + 1
                 : index + 1

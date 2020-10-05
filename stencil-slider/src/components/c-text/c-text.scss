@@ -89,7 +89,7 @@ input[name^="paragraph"] {
             right: 3vw;
 
             &.anchor-down {
-              bottom: 60px;
+              bottom: 15vh;
             }
           }
         }
@@ -100,7 +100,7 @@ input[name^="paragraph"] {
 
           @media screen and (max-width: 640px) {
             right: 3vw;
-            bottom: 60px;
+            bottom: 15vh;
           }
         }
       }
