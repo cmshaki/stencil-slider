@@ -10,6 +10,7 @@ export class CText {
   @Prop() maxMobileText: number;
   @Prop() sliderLang: string;
   @Prop() radioButtonIdOffset?: number;
+  @Prop() noArrows?: boolean;
 
   @State() activeArr: Array<boolean>;
   @State() textRender: any;
@@ -209,10 +210,16 @@ export class CText {
   render() {
     return (
       <div class="paragraphs-root">
-        {this.textRender && this.activeArr
+        {this.textRender && this.activeArr && !this.noArrows
           ? this.renderInputRadioButtons()
           : null}
-        <div class="paragraphs-wrapper">
+        <div
+          class={
+            this.noArrows
+              ? "paragraphs-wrapper no-arrows"
+              : "paragraphs-wrapper"
+          }
+        >
           {this.textRender ? this.renderParagraphs() : null}
         </div>
       </div>

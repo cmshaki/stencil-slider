@@ -105,7 +105,7 @@ export class Slider {
   }
 
   disconnectedCallback() {
-    if (this.intervalTimeout) clearTimeout(this.intervalTimeout);
+    if (this.intervalTimeoutDuration) clearTimeout(this.intervalTimeout);
   }
 
   startInterval = () => {

@@ -41,6 +41,23 @@ input[name^="paragraph"] {
     position: relative;
     overflow: hidden;
 
+    &.no-arrows {
+      height: auto;
+      .paragraph-item {
+        position: static;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+
+        .paragraph-inner-item {
+          @media screen and (max-width: 640px) {
+            padding: 10vh 4.5vw 4.5vw 4.5vw;
+          }
+        }
+      }
+    }
+
     .paragraph-item {
       z-index: 2;
       position: absolute;
@@ -81,7 +98,7 @@ input[name^="paragraph"] {
 
           &.anchor-down {
             top: auto;
-            bottom: 5vh;
+            bottom: 60px;
           }
 
           @media screen and (max-width: 640px) {
