@@ -37,6 +37,7 @@ export namespace Components {
     interface CText {
         "maxDesktopText": number;
         "maxMobileText": number;
+        "noArrows"?: boolean;
         "radioButtonIdOffset"?: number;
         "richText": string[];
         "sliderLang": string;
@@ -120,6 +121,7 @@ declare namespace LocalJSX {
     interface CText {
         "maxDesktopText"?: number;
         "maxMobileText"?: number;
+        "noArrows"?: boolean;
         "radioButtonIdOffset"?: number;
         "richText"?: string[];
         "sliderLang"?: string;

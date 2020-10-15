@@ -202,7 +202,9 @@ export class CText {
         <div class="paragraph-inner-item">
           <p innerHTML={val}></p>
         </div>
-        {this.textRender.length > 1 ? this.renderLabelButtons(idx) : null}
+        {this.textRender.length > 1 && !this.noArrows
+          ? this.renderLabelButtons(idx)
+          : null}
       </div>
     ));
   };
