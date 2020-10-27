@@ -36,7 +36,7 @@ export class Slider {
 
   @Watch("activeSlideIndex")
   watchHandler(newValue, oldValue) {
-    if (newValue !== undefined) {
+    if (newValue !== undefined && this.activeArr) {
       if (newValue !== oldValue) {
         if (newValue > 9) {
           const newIndex = newValue / 10;

@@ -20,6 +20,7 @@ export class CText {
   currentWidth: number;
 
   divideText(maxChars) {
+    if (!this.richText) return "";
     if (this.richText.length == 1) return this.richText; // If we are on the last item return last item
     const charCounts = this.richText.map(val => {
       return val.length;
