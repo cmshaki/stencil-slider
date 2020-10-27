@@ -20,6 +20,7 @@ export namespace Components {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "dynamicIntervalTimeoutArray"?: Array<Array<number>>;
         "intervalExternalFunction"?: Function;
         "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;
@@ -104,6 +105,7 @@ declare namespace LocalJSX {
         "carouselInnerTransitionFaster"?: string;
         "collapseOnMobile"?: boolean;
         "didLoadFunc"?: Function;
+        "dynamicIntervalTimeoutArray"?: Array<Array<number>>;
         "intervalExternalFunction"?: Function;
         "intervalTimeoutDuration"?: number;
         "lastArrowBlack"?: boolean;

@@ -19,6 +19,7 @@ export class Slider {
   @Prop() nextLabelFunc?: Function;
   @Prop() radioButtonIdOffset?: number;
   @Prop() activeSlideIndex?: number;
+  @Prop() dynamicIntervalTimeoutArray?: Array<Array<number>>;
   @Prop() intervalTimeoutDuration?: number;
   @Prop() stopFirstAndLastSlideTransitions?: boolean;
   @Prop() intervalExternalFunction?: Function;
@@ -30,6 +31,7 @@ export class Slider {
   activeMap: Map<number, Array<boolean>>;
   initialArr: Array<boolean>;
   previousSlideIndex: number;
+  checkIntervalTimeout: Function;
   intervalFunc: Function;
 
   @Watch("activeSlideIndex")
@@ -71,33 +73,54 @@ export class Slider {
         : 0
     ] = true;
     this.activeArr = this.initialArr;
+    this.checkIntervalTimeout = () => {
+      if (this.intervalTimeoutDuration) {
+        if (this.intervalTimeout) clearInterval(this.intervalTimeout);
+        if (this.dynamicIntervalTimeoutArray) {
+          let hasSetInterval = false;
+          this.dynamicIntervalTimeoutArray.forEach(val => {
+            if (val[0] === this.activeArr.indexOf(true)) {
+              hasSetInterval = true;
+              this.intervalTimeout = setInterval(this.intervalFunc, val[1]);
+            }
+          });
+          if (!hasSetInterval) {
+            this.intervalTimeout = setInterval(
+              this.intervalFunc,
+              this.intervalTimeoutDuration
+            );
+          }
+        } else {
+          this.intervalTimeout = setInterval(
+            this.intervalFunc,
+            this.intervalTimeoutDuration
+          );
+        }
+      }
+    };
     this.intervalFunc = () => {
       if (this.intervalExternalFunction) {
         this.intervalExternalFunction(this.activeArr.indexOf(true));
       }
-      const index = this.activeArr.indexOf(true);
-      if (index === this.activeArr.length - 1) {
+      if (this.activeArr.indexOf(true) === this.activeArr.length - 1) {
         if (this.stopFirstAndLastSlideTransitions) {
           if (!this.stopTransitions) {
             this.stopTransitions = true;
           }
         }
         this.activeArr = this.activeMap.get(0);
+        this.checkIntervalTimeout();
       } else {
         if (this.stopFirstAndLastSlideTransitions) {
           if (this.stopTransitions) {
             this.stopTransitions = false;
           }
         }
-        this.activeArr = this.activeMap.get(index + 1);
+        this.activeArr = this.activeMap.get(this.activeArr.indexOf(true) + 1);
+        this.checkIntervalTimeout();
       }
     };
-    if (this.intervalTimeoutDuration) {
-      this.intervalTimeout = setInterval(
-        this.intervalFunc,
-        this.intervalTimeoutDuration
-      );
-    }
+    this.checkIntervalTimeout();
   }
 
   componentDidLoad() {
@@ -109,10 +132,7 @@ export class Slider {
   }
 
   startInterval = () => {
-    this.intervalTimeout = setInterval(
-      this.intervalFunc,
-      this.intervalTimeoutDuration
-    );
+    this.checkIntervalTimeout();
   };
 
   stopInterval = () => {
@@ -121,15 +141,6 @@ export class Slider {
 
   handleClick(index: number) {
     const idx = this.activeArr.indexOf(true);
-    if (this.intervalTimeoutDuration) {
-      if (this.intervalTimeout) {
-        clearTimeout(this.intervalTimeout);
-      }
-      this.intervalTimeout = setInterval(
-        this.intervalFunc,
-        this.intervalTimeoutDuration
-      );
-    }
     if (this.stopFirstAndLastSlideTransitions) {
       if (idx === this.activeArr.length - 1 && index === 0) {
         this.stopTransitions = true;
@@ -141,6 +152,9 @@ export class Slider {
     }
     if (!this.activeArr[index]) {
       this.activeArr = this.activeMap.get(index);
+      if (this.intervalTimeoutDuration) {
+        this.checkIntervalTimeout();
+      }
     }
     if (idx && this.carouselInnerTransitionFaster) {
       this.carouselInnerTransitionFaster = "";
