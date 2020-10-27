@@ -24,5 +24,8 @@ export class CloudinaryImage {
     this.cloudinary_url = `https://res.cloudinary.com/${this.account}/image/upload/${transformations}/v1/${this.alias}`;
   }
 
-  render = () => <img src={this.cloudinary_url} sizes={this.sizes} />;
+  render = () => {
+    if (this.alias && this.account)
+      <img src={this.cloudinary_url} sizes={this.sizes} />;
+  };
 }
