@@ -26,6 +26,6 @@ export class CloudinaryImage {
 
   render = () => {
     if (this.alias && this.account)
-      <img src={this.cloudinary_url} sizes={this.sizes} />;
+      return <img src={this.cloudinary_url} sizes={this.sizes} />;
   };
 }
