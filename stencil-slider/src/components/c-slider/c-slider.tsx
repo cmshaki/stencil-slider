@@ -197,97 +197,93 @@ export class Slider {
   //};
 
   renderInputRadioButtons = () => {
-    if (this.activeArr) {
-      let arr = [];
-      for (let i = 0; i < this.initialArr.length; i++) {
-        const inputProps = { checked: this.activeArr[i] };
-        if (!inputProps.checked) delete inputProps.checked;
-        arr[i] = (
-          <input
-            type="radio"
-            onClick={() => this.handleClick(i)}
-            name={`carousel${this.sliderLang}${
-              this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
-            }`}
-            id={`carousel-${this.sliderLang}-${
-              this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
-            }`}
-            {...inputProps}
-          />
-        );
-      }
-      return arr;
+    let arr = [];
+    for (let i = 0; i < this.initialArr.length; i++) {
+      const inputProps = { checked: this.activeArr[i] };
+      if (!inputProps.checked) delete inputProps.checked;
+      arr[i] = (
+        <input
+          type="radio"
+          onClick={() => this.handleClick(i)}
+          name={`carousel${this.sliderLang}${
+            this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
+          }`}
+          id={`carousel-${this.sliderLang}-${
+            this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
+          }`}
+          {...inputProps}
+        />
+      );
     }
+    return arr;
   };
 
   renderLabelButtons = () => {
-    if (this.activeArr) {
-      if (this.removeArrowNavigation) return null;
-      const prevLabelProps = {
-        onMouseOver: this.handleMouseOver,
-        onMouseOut: this.handleMouseOut,
-        onClick: () => this.prevLabelFunc(this.activeArr)
-      };
-      const nextLabelProps = {
-        onClick: () => this.nextLabelFunc(this.activeArr)
-      };
-      if (!this.prevLabelFunc) {
-        delete prevLabelProps.onClick;
-        delete nextLabelProps.onClick;
-      }
-      if (!this.carouselInnerTransitionFaster) delete prevLabelProps.onMouseOut;
-      if (!this.loadLastSlideItemHalfway) delete prevLabelProps.onMouseOver;
-      return (
-        <div
-          class={`carousel-nav${this.theme ? " dark-theme" : ""}${
-            this.lastArrowBlack &&
-            this.activeArr.indexOf(true) === this.activeArr.length - 1
-              ? " last-arrow-black"
-              : ""
-          }`}
-        >
-          <label
-            htmlFor={
-              this.activeArr.indexOf(true) +
-                (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) >
-              (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0)
-                ? `carousel-${this.sliderLang}-${
-                    this.radioButtonIdOffset
-                      ? this.radioButtonIdOffset +
-                        this.activeArr.indexOf(true) -
-                        1
-                      : this.activeArr.indexOf(true) - 1
-                  }`
-                : `carousel-${this.sliderLang}-${
-                    this.radioButtonIdOffset
-                      ? this.radioButtonIdOffset + this.activeArr.length - 1
-                      : this.activeArr.length - 1
-                  }`
-            }
-            {...prevLabelProps}
-          ></label>
-          <label
-            htmlFor={
-              this.activeArr.indexOf(true) +
-                (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) <
-              (this.radioButtonIdOffset
-                ? this.radioButtonIdOffset + this.activeArr.length - 1
-                : this.activeArr.length - 1)
-                ? `carousel-${this.sliderLang}-${
-                    this.radioButtonIdOffset
-                      ? this.radioButtonIdOffset +
-                        (this.activeArr.indexOf(true) + 1)
-                      : this.activeArr.indexOf(true) + 1
-                  }`
-                : `carousel-${this.sliderLang}-${
-                    this.radioButtonIdOffset ? this.radioButtonIdOffset : 0
-                  }`
-            }
-            {...nextLabelProps}
-          ></label>
-        </div>
-      );
+    if (this.removeArrowNavigation) return null;
+    const prevLabelProps = {
+      onMouseOver: this.handleMouseOver,
+      onMouseOut: this.handleMouseOut,
+      onClick: () => this.prevLabelFunc(this.activeArr)
+    };
+    const nextLabelProps = {
+      onClick: () => this.nextLabelFunc(this.activeArr)
+    };
+    if (!this.prevLabelFunc) {
+      delete prevLabelProps.onClick;
+      delete nextLabelProps.onClick;
     }
+    if (!this.carouselInnerTransitionFaster) delete prevLabelProps.onMouseOut;
+    if (!this.loadLastSlideItemHalfway) delete prevLabelProps.onMouseOver;
+    return (
+      <div
+        class={`carousel-nav${this.theme ? " dark-theme" : ""}${
+          this.lastArrowBlack &&
+          this.activeArr.indexOf(true) === this.activeArr.length - 1
+            ? " last-arrow-black"
+            : ""
+        }`}
+      >
+        <label
+          htmlFor={
+            this.activeArr.indexOf(true) +
+              (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) >
+            (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0)
+              ? `carousel-${this.sliderLang}-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset +
+                      this.activeArr.indexOf(true) -
+                      1
+                    : this.activeArr.indexOf(true) - 1
+                }`
+              : `carousel-${this.sliderLang}-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset + this.activeArr.length - 1
+                    : this.activeArr.length - 1
+                }`
+          }
+          {...prevLabelProps}
+        ></label>
+        <label
+          htmlFor={
+            this.activeArr.indexOf(true) +
+              (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) <
+            (this.radioButtonIdOffset
+              ? this.radioButtonIdOffset + this.activeArr.length - 1
+              : this.activeArr.length - 1)
+              ? `carousel-${this.sliderLang}-${
+                  this.radioButtonIdOffset
+                    ? this.radioButtonIdOffset +
+                      (this.activeArr.indexOf(true) + 1)
+                    : this.activeArr.indexOf(true) + 1
+                }`
+              : `carousel-${this.sliderLang}-${
+                  this.radioButtonIdOffset ? this.radioButtonIdOffset : 0
+                }`
+          }
+          {...nextLabelProps}
+        ></label>
+      </div>
+    );
   };
 
   lastSlideWidthChecker = () => {
@@ -310,9 +306,9 @@ export class Slider {
         }`}
       >
         {/* carousel controls */}
-        {this.renderInputRadioButtons()}
+        {this.activeArr ? this.renderInputRadioButtons() : null}
         {/* carousel navigation */}
-        {this.renderLabelButtons()}
+        {this.activeArr ? this.renderLabelButtons() : null}
         {/* carousel slides */}
         <div class="carousel-slides">
           <div
