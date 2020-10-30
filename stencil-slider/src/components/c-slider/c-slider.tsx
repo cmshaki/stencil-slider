@@ -100,9 +100,6 @@ export class Slider {
 
   componentWillLoad() {
     // Change the new Array constructor number to reflect the number of slides you want
-    console.log("These are all the props for C-Slider");
-    console.log(this.activeSlideIndex);
-    console.log(this.radioButtonIdOffset);
     this.initialArr = new Array(this.slides).fill(false);
     const getCurrentActiveArr = (index: number) => {
       return this.initialArr.map((val, idx) => {
