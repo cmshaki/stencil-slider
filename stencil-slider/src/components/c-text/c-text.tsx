@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from "@stencil/core";
+import { Component, Watch, h, Prop, State } from "@stencil/core";
 
 @Component({
   tag: "c-text",
@@ -11,13 +11,29 @@ export class CText {
   @Prop() sliderLang: string;
   @Prop() radioButtonIdOffset?: number;
   @Prop() noArrows?: boolean;
+  @Prop() viewport: string;
 
   @State() activeArr: Array<boolean>;
   @State() textRender: any;
 
   activeMap: Map<number, Array<boolean>>;
   initialArr: Array<boolean>;
-  currentWidth: number;
+  dividedTextMobile: any;
+  dividedTextDesktop: any;
+
+  @Watch("viewport")
+  watchViewportHandler(newValue, oldValue) {
+    if (newValue !== oldValue) {
+      if (newValue === "desktop") {
+        this.textRender = this.dividedTextDesktop;
+        this.radioButtonsCheckedFunc("desktop");
+      }
+      if (newValue === "mobile") {
+        this.textRender = this.dividedTextMobile;
+        this.radioButtonsCheckedFunc("mobile");
+      }
+    }
+  }
 
   divideText(maxChars) {
     if (!this.richText) return "";
@@ -69,53 +85,42 @@ export class CText {
     return textBlobs;
   }
 
-  resizeHandle = () => {
-    let dividedText;
-    const radioButtonsCheckedFunc = () => {
-      if (dividedText.length > 1) {
-        this.initialArr = new Array(dividedText.length).fill(false);
-        const getCurrentActiveArr = (index: number) => {
-          return this.initialArr.map((val, idx) => {
-            if (index == idx) return true;
-            return val;
-          });
-        };
-        this.activeMap = new Map();
-        for (let i = 0; i < this.initialArr.length; i++) {
-          this.activeMap.set(i, getCurrentActiveArr(i));
-        }
-        this.initialArr[0] = true;
-        this.activeArr = this.initialArr;
-      }
-    };
+  radioButtonsCheckedFunc(viewport: string) {
     if (
-      window.innerWidth > 640 &&
-      (this.currentWidth < 641 || !this.currentWidth)
+      (viewport === "desktop" && this.dividedTextDesktop.length > 1) ||
+      (viewport === "mobile" && this.dividedTextMobile.length > 1)
     ) {
-      // Maximum charcter limit for desktop screens
-      this.currentWidth = window.innerWidth;
-      dividedText = this.divideText(this.maxDesktopText);
-      radioButtonsCheckedFunc();
-      this.textRender = dividedText;
-    } else if (
-      window.innerWidth < 641 &&
-      (this.currentWidth > 640 || !this.currentWidth)
-    ) {
-      // Maximum charcter limit for mobile screens
-      this.currentWidth = window.innerWidth;
-      dividedText = this.divideText(this.maxMobileText);
-      radioButtonsCheckedFunc();
-      this.textRender = dividedText;
+      if (viewport === "desktop") {
+        this.initialArr = new Array(this.dividedTextDesktop.length).fill(false);
+      }
+      if (viewport === "mobile") {
+        this.initialArr = new Array(this.dividedTextMobile.length).fill(false);
+      }
+      const getCurrentActiveArr = (index: number) => {
+        return this.initialArr.map((val, idx) => {
+          if (index == idx) return true;
+          return val;
+        });
+      };
+      this.activeMap = new Map();
+      for (let i = 0; i < this.initialArr.length; i++) {
+        this.activeMap.set(i, getCurrentActiveArr(i));
+      }
+      this.initialArr[0] = true;
+      this.activeArr = this.initialArr;
     }
-  };
-
-  componentWillLoad() {
-    this.resizeHandle();
-    window.addEventListener("resize", this.resizeHandle);
   }
 
-  disconnectedCallback() {
-    window.removeEventListener("resize", this.resizeHandle);
+  componentWillLoad() {
+    this.dividedTextMobile = this.divideText(this.maxMobileText);
+    this.dividedTextDesktop = this.divideText(this.maxDesktopText);
+    if (this.viewport === "desktop") {
+      this.textRender = this.dividedTextDesktop;
+      this.radioButtonsCheckedFunc("desktop");
+    } else {
+      this.textRender = this.dividedTextMobile;
+      this.radioButtonsCheckedFunc("mobile");
+    }
   }
 
   handleClick(index: number) {

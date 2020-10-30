@@ -31,8 +31,6 @@ export class Slider {
   activeMap: Map<number, Array<boolean>>;
   initialArr: Array<boolean>;
   previousSlideIndex: number;
-  checkIntervalTimeout: Function;
-  intervalFunc: Function;
 
   @Watch("activeSlideIndex")
   watchHandler(newValue, oldValue) {
@@ -51,9 +49,60 @@ export class Slider {
       }
     }
   }
+  checkIntervalTimeout() {
+    if (this.intervalTimeoutDuration) {
+      if (this.intervalTimeout) clearInterval(this.intervalTimeout);
+      if (this.dynamicIntervalTimeoutArray) {
+        let hasSetInterval = false;
+        this.dynamicIntervalTimeoutArray.forEach(val => {
+          if (val[0] === this.activeArr.indexOf(true)) {
+            hasSetInterval = true;
+            this.intervalTimeout = setInterval(this.intervalFunc, val[1]);
+          }
+        });
+        if (!hasSetInterval) {
+          this.intervalTimeout = setInterval(
+            this.intervalFunc,
+            this.intervalTimeoutDuration
+          );
+        }
+      } else {
+        this.intervalTimeout = setInterval(
+          this.intervalFunc,
+          this.intervalTimeoutDuration
+        );
+      }
+    }
+  }
+
+  intervalFunc() {
+    if (this.intervalExternalFunction) {
+      this.intervalExternalFunction(this.activeArr.indexOf(true));
+    }
+    if (this.activeArr.indexOf(true) === this.activeArr.length - 1) {
+      if (this.stopFirstAndLastSlideTransitions) {
+        if (!this.stopTransitions) {
+          this.stopTransitions = true;
+        }
+      }
+      this.activeArr = this.activeMap.get(0);
+      this.checkIntervalTimeout();
+    } else {
+      if (this.stopFirstAndLastSlideTransitions) {
+        if (this.stopTransitions) {
+          this.stopTransitions = false;
+        }
+      }
+      this.activeArr = this.activeMap.get(this.activeArr.indexOf(true) + 1);
+      this.checkIntervalTimeout();
+    }
+  }
 
   componentWillLoad() {
     // Change the new Array constructor number to reflect the number of slides you want
+    console.log("These are all the props for C-Slider");
+    console.log(this.activeSlideIndex);
+    console.log(this.radioButtonIdOffset);
     this.initialArr = new Array(this.slides).fill(false);
     const getCurrentActiveArr = (index: number) => {
       return this.initialArr.map((val, idx) => {
@@ -73,53 +122,6 @@ export class Slider {
         : 0
     ] = true;
     this.activeArr = this.initialArr;
-    this.checkIntervalTimeout = () => {
-      if (this.intervalTimeoutDuration) {
-        if (this.intervalTimeout) clearInterval(this.intervalTimeout);
-        if (this.dynamicIntervalTimeoutArray) {
-          let hasSetInterval = false;
-          this.dynamicIntervalTimeoutArray.forEach(val => {
-            if (val[0] === this.activeArr.indexOf(true)) {
-              hasSetInterval = true;
-              this.intervalTimeout = setInterval(this.intervalFunc, val[1]);
-            }
-          });
-          if (!hasSetInterval) {
-            this.intervalTimeout = setInterval(
-              this.intervalFunc,
-              this.intervalTimeoutDuration
-            );
-          }
-        } else {
-          this.intervalTimeout = setInterval(
-            this.intervalFunc,
-            this.intervalTimeoutDuration
-          );
-        }
-      }
-    };
-    this.intervalFunc = () => {
-      if (this.intervalExternalFunction) {
-        this.intervalExternalFunction(this.activeArr.indexOf(true));
-      }
-      if (this.activeArr.indexOf(true) === this.activeArr.length - 1) {
-        if (this.stopFirstAndLastSlideTransitions) {
-          if (!this.stopTransitions) {
-            this.stopTransitions = true;
-          }
-        }
-        this.activeArr = this.activeMap.get(0);
-        this.checkIntervalTimeout();
-      } else {
-        if (this.stopFirstAndLastSlideTransitions) {
-          if (this.stopTransitions) {
-            this.stopTransitions = false;
-          }
-        }
-        this.activeArr = this.activeMap.get(this.activeArr.indexOf(true) + 1);
-        this.checkIntervalTimeout();
-      }
-    };
     this.checkIntervalTimeout();
   }
 

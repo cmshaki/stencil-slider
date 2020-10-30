@@ -9,8 +9,8 @@ import videojs from "video.js";
 export class CloudinaryVideo {
   @Element() el: CloudinaryVideo;
   @Prop() account: string;
-  @Prop() width: string;
-  @Prop() height: string;
+  @Prop() width: number;
+  @Prop() height: number;
   @Prop() crop: string;
   @Prop() aspectRatio: string;
   @Prop() alias: string;
@@ -32,8 +32,7 @@ export class CloudinaryVideo {
   private ellipsisRadio: HTMLInputElement;
   private vjsControlBar: HTMLDivElement;
   private videoWrapper: HTMLDivElement;
-  private elllipsisTimeout;
-  any;
+  private elllipsisTimeout: any;
 
   componentWillLoad() {
     this.mouseEnterEvent = false;
@@ -45,8 +44,8 @@ export class CloudinaryVideo {
     this.fullVideo = `https://res.cloudinary.com/${this.account}/video/upload${transformations}${this.alias}.mp4`;
     //this.preview = `https://res.cloudinary.com/${this.account}/video/upload/so_0,du_2/l_video:${this.alias},fl_splice,so_12/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_24/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_36/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_48/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_80/du_2/fl_layer_apply/${this.alias}.mp4`;
     this.poster = `https://res.cloudinary.com/${this.account}/video/upload${transformations}${this.alias}.jpg`;
-    this.resizeHandle();
-    window.addEventListener("resize", this.resizeHandle);
+    this.resizeVideoHandle();
+    window.addEventListener("resize", () => this.resizeVideoHandle());
   }
 
   componentDidLoad() {
@@ -75,7 +74,7 @@ export class CloudinaryVideo {
       this.vjsControlBar.removeEventListener("mouseenter", this.fireMouseEnter);
       this.vjsControlBar.removeEventListener("mouseleave", this.fireMouseLeave);
     }
-    window.removeEventListener("resize", this.resizeHandle);
+    window.removeEventListener("resize", () => this.resizeVideoHandle());
   }
 
   videoPlayback = () => {
@@ -87,7 +86,7 @@ export class CloudinaryVideo {
     }
   };
 
-  resizeHandle = () => {
+  resizeVideoHandle = () => {
     if (this.currentWindowWidth) {
       if (
         (this.currentWindowWidth < 641 && window.innerWidth > 640) ||

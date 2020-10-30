@@ -1,4 +1,4 @@
-import { Component, Prop, h } from "@stencil/core";
+import { Component, State, Watch, Prop, h } from "@stencil/core";
 
 @Component({
   tag: "c-image",
@@ -7,21 +7,39 @@ import { Component, Prop, h } from "@stencil/core";
 export class CloudinaryImage {
   @Prop() account: string;
   @Prop() alias: string;
-  @Prop() width: string;
-  @Prop() height: string;
+  @Prop() width: number;
+  @Prop() height: number;
   @Prop() crop: string;
   @Prop() gravity: string;
   @Prop() sizes: string;
 
-  private cloudinary_url;
+  @State() cloudinary_url;
+
+  generateImageUrl() {
+    const gravity = this.gravity ? `g_${this.gravity},` : "";
+    const crop = this.crop ? `c_${this.crop},` : "";
+    const width = this.width ? `w_${this.width},` : "";
+    const height = this.height ? `h_${this.height},` : "";
+    const transformations = `${gravity}${crop}${height}${width}q_auto,f_auto,dpr_auto,fl_progressive`;
+    this.cloudinary_url = `https://res.cloudinary.com/${this.account}/image/upload/${transformations}/v1/${this.alias}`;
+  }
+
+  @Watch("width")
+  watchWidth(newValue, oldValue) {
+    if (newValue !== oldValue) {
+      this.generateImageUrl();
+    }
+  }
+
+  @Watch("height")
+  watchHeight(newValue, oldValue) {
+    if (newValue !== oldValue) {
+      this.generateImageUrl();
+    }
+  }
 
   componentWillLoad() {
-    this.gravity = this.gravity ? `g_${this.gravity},` : "";
-    this.crop = this.crop ? `c_${this.crop},` : "";
-    this.width = this.width ? `w_${this.width},` : "";
-    this.height = this.height ? `h_${this.height},` : "";
-    const transformations = `${this.gravity}${this.crop}${this.height}${this.width}q_auto,f_auto,dpr_auto,fl_progressive`;
-    this.cloudinary_url = `https://res.cloudinary.com/${this.account}/image/upload/${transformations}/v1/${this.alias}`;
+    this.generateImageUrl();
   }
 
   render = () => {

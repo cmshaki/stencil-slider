@@ -11,9 +11,9 @@ export namespace Components {
         "alias": string;
         "crop": string;
         "gravity": string;
-        "height": string;
+        "height": number;
         "sizes": string;
-        "width": string;
+        "width": number;
     }
     interface CSlider {
         "activeSlideIndex"?: number;
@@ -42,20 +42,21 @@ export namespace Components {
         "radioButtonIdOffset"?: number;
         "richText": string[];
         "sliderLang": string;
+        "viewport": string;
     }
     interface CVideo {
         "account": string;
         "alias": string;
         "aspectRatio": string;
         "crop": string;
-        "height": string;
+        "height": number;
         "index": number;
         "intervalTimeout"?: number;
         "isActive": Array<boolean | null>;
         "mobileCollapse": boolean;
         "startInterval": Function;
         "stopInterval": Function;
-        "width": string;
+        "width": number;
     }
 }
 declare global {
@@ -96,9 +97,9 @@ declare namespace LocalJSX {
         "alias"?: string;
         "crop"?: string;
         "gravity"?: string;
-        "height"?: string;
+        "height"?: number;
         "sizes"?: string;
-        "width"?: string;
+        "width"?: number;
     }
     interface CSlider {
         "activeSlideIndex"?: number;
@@ -127,20 +128,21 @@ declare namespace LocalJSX {
         "radioButtonIdOffset"?: number;
         "richText"?: string[];
         "sliderLang"?: string;
+        "viewport"?: string;
     }
     interface CVideo {
         "account"?: string;
         "alias"?: string;
         "aspectRatio"?: string;
         "crop"?: string;
-        "height"?: string;
+        "height"?: number;
         "index"?: number;
         "intervalTimeout"?: number;
         "isActive"?: Array<boolean | null>;
         "mobileCollapse"?: boolean;
         "startInterval"?: Function;
         "stopInterval"?: Function;
-        "width"?: string;
+        "width"?: number;
     }
     interface IntrinsicElements {
         "c-image": CImage;
