@@ -1,7 +1,7 @@
 .video-wrapper {
   height: 100%;
 
-  & > input[type="radio"] {
+  & > input[type="radio"]:first-child {
     display: none;
 
     & ~ label {

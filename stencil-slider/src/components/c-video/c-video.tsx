@@ -20,6 +20,8 @@ export class CloudinaryVideo {
   @Prop() startInterval: Function;
   @Prop() stopInterval: Function;
   @Prop() index: number;
+  @Prop() videoLang: string;
+  @Prop() path: string;
 
   @State() fullVideo: string;
   //@State() preview: string;
@@ -28,14 +30,10 @@ export class CloudinaryVideo {
 
   private videoEl: any;
   private videoJsEl: any;
-  private mouseEnterEvent: boolean;
   private ellipsisRadio: HTMLInputElement;
-  private vjsControlBar: HTMLDivElement;
-  private videoWrapper: HTMLDivElement;
-  private elllipsisTimeout: any;
+  private ellipsisTimeout: any;
 
   componentWillLoad() {
-    this.mouseEnterEvent = false;
     const cropFmt = this.crop ? `c_${this.crop},` : "";
     const heightFmt = this.height ? `h_${this.height},` : "";
     const widthFmt = this.width ? `w_${this.width},` : "";
@@ -57,10 +55,15 @@ export class CloudinaryVideo {
         children: ["playToggle", "progressControl", "muteToggle"]
       }
     });
+    this.videoJsEl.on("play", () => (this.ellipsisRadio.checked = true));
+    this.videoJsEl.on("pause", () => {
+      if (this.ellipsisTimeout) clearTimeout(this.ellipsisTimeout);
+      this.ellipsisTimeout = setTimeout(
+        () => (this.ellipsisRadio.checked = false),
+        5000
+      );
+    });
     this.videoPlayback();
-    this.vjsControlBar = this.videoWrapper.querySelector(".vjs-control-bar");
-    this.vjsControlBar.addEventListener("mouseenter", this.fireMouseEnter);
-    this.vjsControlBar.addEventListener("mouseleave", this.fireMouseLeave);
   }
 
   componentDidUpdate() {
@@ -68,12 +71,8 @@ export class CloudinaryVideo {
   }
 
   disconnectedCallback() {
-    if (this.elllipsisTimeout) clearTimeout(this.elllipsisTimeout);
+    if (this.ellipsisTimeout) clearTimeout(this.ellipsisTimeout);
     if (this.videoJsEl) this.videoJsEl.dispose();
-    if (this.vjsControlBar) {
-      this.vjsControlBar.removeEventListener("mouseenter", this.fireMouseEnter);
-      this.vjsControlBar.removeEventListener("mouseleave", this.fireMouseLeave);
-    }
     window.removeEventListener("resize", () => this.resizeVideoHandle());
   }
 
@@ -82,7 +81,7 @@ export class CloudinaryVideo {
       this.videoJsEl.muted(true);
       this.videoJsEl.play();
     } else {
-      if (!this.videoJsEl.paused) this.videoJsEl.pause();
+      if (!this.videoJsEl.paused()) this.videoJsEl.pause();
     }
   };
 
@@ -100,21 +99,15 @@ export class CloudinaryVideo {
     }
   };
 
-  fireMouseEnter = () => {
-    if (this.intervalTimeout) {
-      this.stopInterval();
-    }
-    this.mouseEnterEvent = true;
-  };
-
-  fireMouseLeave = () => {
-    this.mouseEnterEvent = false;
-    if (this.currentWindowWidth > 640) {
-      this.elllipsisTimeout = setTimeout(() => {
-        if (!this.mouseEnterEvent) this.ellipsisRadio.checked = false;
-        this.startInterval();
-      }, 10000);
-    }
+  handleLabelClick = () => {
+    this.stopInterval();
+    if (this.ellipsisTimeout) clearTimeout(this.ellipsisTimeout);
+    this.ellipsisTimeout = setTimeout(() => {
+      if (this.videoJsEl.paused()) {
+        this.ellipsisRadio.checked = false;
+      }
+      this.startInterval();
+    }, 10000);
   };
 
   renderEllipsisOrPlay = () => {
@@ -152,14 +145,18 @@ export class CloudinaryVideo {
 
   render() {
     return (
-      <div class="video-wrapper" ref={el => (this.videoWrapper = el)}>
+      <div class="video-wrapper">
         <input
           type="radio"
-          name="ellipsis"
-          id={`ellipsis${this.index}`}
+          name={`ellipsis-${this.videoLang}-${this.path}-${this.index}`}
+          id={`ellipsis-${this.videoLang}-${this.path}-${this.index}`}
+          defaultChecked
           ref={el => (this.ellipsisRadio = el)}
         />
-        <label htmlFor={`ellipsis${this.index}`}>
+        <label
+          htmlFor={`ellipsis-${this.videoLang}-${this.path}-${this.index}`}
+          onClick={this.handleLabelClick}
+        >
           {this.renderEllipsisOrPlay()}
         </label>
         <video

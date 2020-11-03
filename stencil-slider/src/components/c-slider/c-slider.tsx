@@ -24,6 +24,7 @@ export class Slider {
   @Prop() stopFirstAndLastSlideTransitions?: boolean;
   @Prop() intervalExternalFunction?: Function;
   @Prop() sliderLang: string;
+  @Prop() path: string;
   @State() activeArr: Array<boolean>;
   @State() stopTransitions: boolean;
 
@@ -75,7 +76,7 @@ export class Slider {
     }
   }
 
-  intervalFunc() {
+  intervalFunc = () => {
     if (this.intervalExternalFunction) {
       this.intervalExternalFunction(this.activeArr.indexOf(true));
     }
@@ -96,7 +97,7 @@ export class Slider {
       this.activeArr = this.activeMap.get(this.activeArr.indexOf(true) + 1);
       this.checkIntervalTimeout();
     }
-  }
+  };
 
   componentWillLoad() {
     // Change the new Array constructor number to reflect the number of slides you want
@@ -127,7 +128,7 @@ export class Slider {
   }
 
   disconnectedCallback() {
-    if (this.intervalTimeoutDuration) clearTimeout(this.intervalTimeout);
+    if (this.intervalTimeout) clearTimeout(this.intervalTimeout);
   }
 
   startInterval = () => {
@@ -183,18 +184,6 @@ export class Slider {
     }
   };
 
-  //getPrevSlide = () => {
-  //const index = this.activeArr.indexOf(true);
-  //if (index > 0) return `carousel-${index - 1}`;
-  //return `carousel-${this.activeArr.length - 1}`;
-  //};
-
-  //getNextSlide = () => {
-  //const index = this.activeArr.indexOf(true);
-  //if (index < this.activeArr.length - 1) return `carousel-${index + 1}`;
-  //return "carousel-0";
-  //};
-
   renderInputRadioButtons = () => {
     let arr = [];
     for (let i = 0; i < this.initialArr.length; i++) {
@@ -204,10 +193,10 @@ export class Slider {
         <input
           type="radio"
           onClick={() => this.handleClick(i)}
-          name={`carousel${this.sliderLang}${
-            this.radioButtonIdOffset ? this.radioButtonIdOffset : ""
+          name={`carousel-${this.sliderLang}-${this.path}-${
+            this.radioButtonIdOffset ? this.radioButtonIdOffset : "0"
           }`}
-          id={`carousel-${this.sliderLang}-${
+          id={`carousel-${this.sliderLang}-${this.path}-${
             this.radioButtonIdOffset ? i + this.radioButtonIdOffset : i
           }`}
           {...inputProps}
@@ -247,14 +236,14 @@ export class Slider {
             this.activeArr.indexOf(true) +
               (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0) >
             (this.radioButtonIdOffset ? this.radioButtonIdOffset : 0)
-              ? `carousel-${this.sliderLang}-${
+              ? `carousel-${this.sliderLang}-${this.path}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset +
                       this.activeArr.indexOf(true) -
                       1
                     : this.activeArr.indexOf(true) - 1
                 }`
-              : `carousel-${this.sliderLang}-${
+              : `carousel-${this.sliderLang}-${this.path}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset + this.activeArr.length - 1
                     : this.activeArr.length - 1
@@ -269,13 +258,13 @@ export class Slider {
             (this.radioButtonIdOffset
               ? this.radioButtonIdOffset + this.activeArr.length - 1
               : this.activeArr.length - 1)
-              ? `carousel-${this.sliderLang}-${
+              ? `carousel-${this.sliderLang}-${this.path}-${
                   this.radioButtonIdOffset
                     ? this.radioButtonIdOffset +
                       (this.activeArr.indexOf(true) + 1)
                     : this.activeArr.indexOf(true) + 1
                 }`
-              : `carousel-${this.sliderLang}-${
+              : `carousel-${this.sliderLang}-${this.path}-${
                   this.radioButtonIdOffset ? this.radioButtonIdOffset : 0
                 }`
           }

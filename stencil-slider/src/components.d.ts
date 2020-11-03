@@ -27,6 +27,7 @@ export namespace Components {
         "loadLastSlideItemHalfway"?: boolean;
         "nextLabelFunc"?: Function;
         "noTransitions": boolean;
+        "path": string;
         "prevLabelFunc"?: Function;
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
@@ -54,8 +55,10 @@ export namespace Components {
         "intervalTimeout"?: number;
         "isActive": Array<boolean | null>;
         "mobileCollapse": boolean;
+        "path": string;
         "startInterval": Function;
         "stopInterval": Function;
+        "videoLang": string;
         "width": number;
     }
 }
@@ -113,6 +116,7 @@ declare namespace LocalJSX {
         "loadLastSlideItemHalfway"?: boolean;
         "nextLabelFunc"?: Function;
         "noTransitions"?: boolean;
+        "path"?: string;
         "prevLabelFunc"?: Function;
         "radioButtonIdOffset"?: number;
         "removeArrowNavigation"?: boolean;
@@ -140,8 +144,10 @@ declare namespace LocalJSX {
         "intervalTimeout"?: number;
         "isActive"?: Array<boolean | null>;
         "mobileCollapse"?: boolean;
+        "path"?: string;
         "startInterval"?: Function;
         "stopInterval"?: Function;
+        "videoLang"?: string;
         "width"?: number;
     }
     interface IntrinsicElements {
