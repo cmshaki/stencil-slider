@@ -161,7 +161,9 @@
           -webkit-overflow-scrolling: touch;
           overflow-scrolling: touch;
           overflow-x: scroll;
+          scroll-behavior: smooth;
           scroll-snap-type: x mandatory;
+
           .carousel-inner {
             .carousel-item {
               scroll-snap-align: start;
