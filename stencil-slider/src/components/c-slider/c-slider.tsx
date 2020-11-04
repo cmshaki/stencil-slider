@@ -14,6 +14,7 @@ export class Slider {
   @Prop() theme?: boolean;
   @Prop() lastArrowBlack?: boolean;
   @Prop() noTransitions: boolean;
+  @Prop() touchScrollable: boolean;
   @Prop() didLoadFunc?: Function;
   @Prop() prevLabelFunc?: Function;
   @Prop() nextLabelFunc?: Function;
@@ -291,7 +292,8 @@ export class Slider {
           this.collapseOnMobile ? " collapse-on-mobile" : ""
         }${
           this.noTransitions || this.stopTransitions ? " no-transitions" : ""
-        }`}
+        }${this.touchScrollable ? " touch-scrollable" : ""}
+        `}
       >
         {/* carousel controls */}
         {this.activeArr ? this.renderInputRadioButtons() : null}

@@ -35,6 +35,7 @@ export namespace Components {
         "slides": number;
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
+        "touchScrollable": boolean;
     }
     interface CText {
         "maxDesktopText": number;
@@ -124,6 +125,7 @@ declare namespace LocalJSX {
         "slides"?: number;
         "stopFirstAndLastSlideTransitions"?: boolean;
         "theme"?: boolean;
+        "touchScrollable"?: boolean;
     }
     interface CText {
         "maxDesktopText"?: number;

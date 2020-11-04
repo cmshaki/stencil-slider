@@ -150,7 +150,9 @@ export class CloudinaryVideo {
           type="radio"
           name={`ellipsis-${this.videoLang}-${this.path}-${this.index}`}
           id={`ellipsis-${this.videoLang}-${this.path}-${this.index}`}
-          defaultChecked
+          {...(window.innerWidth > 640
+            ? { defaultChecked: true }
+            : { defaultChecked: false })}
           ref={el => (this.ellipsisRadio = el)}
         />
         <label

@@ -33,9 +33,9 @@
   }
 }
 
-@media screen {
+@media screen and (max-width: 640px) {
   .video-wrapper {
-    & > input[type="radio"] {
+    & > input[type="radio"]:first-child {
       & ~ label {
         justify-content: center;
         .custom-video-play {
