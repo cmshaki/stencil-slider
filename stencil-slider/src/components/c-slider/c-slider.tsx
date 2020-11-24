@@ -142,10 +142,12 @@ export class Slider {
 
   handleClick(index: number) {
     const idx = this.activeArr.indexOf(true);
+    this.stopTransitions = false;
     if (this.stopFirstAndLastSlideTransitions) {
-      if (idx === this.activeArr.length - 1 && index === 0) {
-        this.stopTransitions = true;
-      } else if (idx === 0 && index === this.activeArr.length - 1) {
+      if (
+        (idx === this.activeArr.length - 1 && index === 0) ||
+        (idx === 0 && index === this.activeArr.length - 1)
+      ) {
         this.stopTransitions = true;
       } else {
         if (this.stopTransitions) this.stopTransitions = false;
@@ -153,6 +155,11 @@ export class Slider {
     }
     if (!this.activeArr[index]) {
       this.activeArr = this.activeMap.get(index);
+      if (this.stopTransitions) {
+        setTimeout(() => {
+          this.stopTransitions = false;
+        }, 500);
+      }
       if (this.intervalTimeoutDuration) {
         this.checkIntervalTimeout();
       }

@@ -38,7 +38,7 @@ export class CloudinaryVideo {
     const heightFmt = this.height ? `h_${this.height},` : "";
     const widthFmt = this.width ? `w_${this.width},` : "";
     const aspectRatioFmt = this.aspectRatio ? `ar_${this.aspectRatio},` : "";
-    const transformations = `/${aspectRatioFmt}${cropFmt}${heightFmt}${widthFmt}q_auto/`;
+    const transformations = `/${aspectRatioFmt}${cropFmt}${heightFmt}${widthFmt}q_auto,f_auto/`;
     this.fullVideo = `https://res.cloudinary.com/${this.account}/video/upload${transformations}${this.alias}.mp4`;
     //this.preview = `https://res.cloudinary.com/${this.account}/video/upload/so_0,du_2/l_video:${this.alias},fl_splice,so_12/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_24/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_36/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_48/du_2/fl_layer_apply/l_video:${this.alias},fl_splice,so_80/du_2/fl_layer_apply/${this.alias}.mp4`;
     this.poster = `https://res.cloudinary.com/${this.account}/video/upload${transformations}${this.alias}.jpg`;
